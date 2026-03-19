@@ -16,7 +16,13 @@ connectDB();
 
 const app = express();
 
-app.use(cors({ origin: process.env.FRONTEND_URL || "*" }));
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow any origin for now to prevent Vercel CORS issues
+    callback(null, true);
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes
