@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Github, Linkedin, Twitter, Heart } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
 
   return (
     <footer className="footer">
@@ -43,7 +45,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p onDoubleClick={() => window.location.href = '/admin/login'} style={{ cursor: 'pointer' }}>
+          <p onDoubleClick={() => navigate('/admin/login')} style={{ cursor: 'pointer' }}>
             &copy; {currentYear} abhin pramod. All rights reserved.
           </p>
           <p className="made-with">
