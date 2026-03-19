@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 import { Code, Server, Database, Layout } from 'lucide-react';
 import axios from 'axios';
@@ -13,9 +14,9 @@ const About = () => {
     const fetchData = async () => {
       try {
         const [profileRes, expRes, eduRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/profile'),
-          axios.get('http://localhost:5000/api/experience'),
-          axios.get('http://localhost:5000/api/education')
+          axios.get(`\${BASE_URL}/profile`),
+          axios.get(`\${BASE_URL}/experience`),
+          axios.get(`\${BASE_URL}/education`)
         ]);
         setProfile(profileRes.data.data);
         setExperiences(expRes.data.data);

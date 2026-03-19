@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 import { Send, MapPin, Mail, Phone } from 'lucide-react';
 import axios from 'axios';
@@ -28,7 +29,7 @@ const Contact = () => {
     setStatus({ submitting: true, success: false, error: '' });
     
     try {
-      await axios.post('http://localhost:5000/api/contact', formData);
+      await axios.post(`\${BASE_URL}/contact`, formData);
       setStatus({ submitting: false, success: true, error: '' });
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       

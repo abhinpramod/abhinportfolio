@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import axios from 'axios';
 import { Mail, Trash2, Calendar, User, Phone, MessageSquare, Trash, CheckCircle2, AlertCircle } from 'lucide-react';
 
@@ -16,7 +17,7 @@ const MessageManager = () => {
 
   const fetchMessages = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/contact', { headers });
+      const { data } = await axios.get(`\${BASE_URL}/contact`, { headers });
       setMessages(data.data);
     } catch (err) {
       console.error(err);
@@ -28,7 +29,7 @@ const MessageManager = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Wipe this message from records?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/contact/${id}`, { headers });
+      await axios.delete(`\${BASE_URL}/contact/${id}`, { headers });
       setMessages(messages.filter(m => m._id !== id));
       showMessage('success', 'Transmission purged');
     } catch (err) {

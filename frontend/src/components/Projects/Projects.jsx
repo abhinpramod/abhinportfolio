@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, ExternalLink, RefreshCw } from 'lucide-react';
 import axios from 'axios';
@@ -17,7 +18,7 @@ const Projects = () => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get('http://localhost:5000/api/projects');
+      const { data } = await axios.get(`\${BASE_URL}/projects`);
       setProjects(data.data);
       setError('');
     } catch (err) {
@@ -31,7 +32,7 @@ const Projects = () => {
   const seedProjects = async () => {
     try {
       setLoading(true);
-      await axios.post('http://localhost:5000/api/projects/seed');
+      await axios.post(`\${BASE_URL}/projects/seed`);
       fetchProjects();
     } catch (err) {
       setError('Failed to seed projects.');

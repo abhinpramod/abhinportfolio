@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import axios from 'axios';
 import { 
   Plus, 
@@ -36,7 +37,7 @@ const ProjectManager = () => {
 
   const fetchProjects = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/projects');
+      const { data } = await axios.get(`\${BASE_URL}/projects`);
       setProjects(data.data);
     } catch (err) {
       console.error(err);
@@ -57,7 +58,7 @@ const ProjectManager = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this project?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/projects/${id}`, { headers });
+      await axios.delete(`\${BASE_URL}/projects/${id}`, { headers });
       setProjects(projects.filter(p => p._id !== id));
       showMessage('success', 'Project deleted successfully');
     } catch (err) {
@@ -74,10 +75,10 @@ const ProjectManager = () => {
 
     try {
       if (currentProject._id) {
-        await axios.put(`http://localhost:5000/api/projects/${currentProject._id}`, projectData, { headers });
+        await axios.put(`\${BASE_URL}/projects/${currentProject._id}`, projectData, { headers });
         showMessage('success', 'Project updated successfully');
       } else {
-        await axios.post('http://localhost:5000/api/projects', projectData, { headers });
+        await axios.post(`\${BASE_URL}/projects`, projectData, { headers });
         showMessage('success', 'Project created successfully');
       }
       setIsEditing(false);

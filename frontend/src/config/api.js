@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://abhinportfolio-mhxi.vercel.app/api';

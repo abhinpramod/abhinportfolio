@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Lock, Mail, Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react';
@@ -25,7 +26,7 @@ const Login = () => {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const { data } = await axios.post(`\${BASE_URL}/auth/login`, { email, password });
       localStorage.setItem('adminToken', data.token);
       setEmail('');
       setPassword('');

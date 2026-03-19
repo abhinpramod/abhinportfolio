@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import axios from 'axios';
 import { Plus, Trash2, Edit2, Save, X, Briefcase, CheckCircle2, AlertCircle } from 'lucide-react';
 
@@ -23,7 +24,7 @@ const ExperienceManager = () => {
 
   const fetchExperiences = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/experience');
+      const { data } = await axios.get(`\${BASE_URL}/experience`);
       setExperiences(data.data);
     } catch (err) {
       console.error(err);
@@ -43,7 +44,7 @@ const ExperienceManager = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this experience?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/experience/${id}`, { headers });
+      await axios.delete(`\${BASE_URL}/experience/${id}`, { headers });
       setExperiences(experiences.filter(e => e._id !== id));
       showMessage('success', 'Experience deleted');
     } catch (err) {
@@ -59,10 +60,10 @@ const ExperienceManager = () => {
     };
     try {
       if (currentExp._id) {
-        await axios.put(`http://localhost:5000/api/experience/${currentExp._id}`, expData, { headers });
+        await axios.put(`\${BASE_URL}/experience/${currentExp._id}`, expData, { headers });
         showMessage('success', 'Experience updated');
       } else {
-        await axios.post('http://localhost:5000/api/experience', expData, { headers });
+        await axios.post(`\${BASE_URL}/experience`, expData, { headers });
         showMessage('success', 'Experience added');
       }
       setIsEditing(false);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import axios from 'axios';
 import { Save, User, Github, Linkedin, Twitter, Instagram, Facebook, Mail, Phone, MapPin, Globe, CheckCircle2, AlertCircle } from 'lucide-react';
 
@@ -35,7 +36,7 @@ const ProfileManager = () => {
 
   const fetchProfile = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/profile');
+      const { data } = await axios.get(`\${BASE_URL}/profile`);
       if (data.data) {
         const d = data.data;
         setProfile({
@@ -85,7 +86,7 @@ const ProfileManager = () => {
         phone: profile.contactInfo?.phone || '',
         address: profile.contactInfo?.address || ''
       };
-      await axios.post('http://localhost:5000/api/profile', payload, { headers });
+      await axios.post(`\${BASE_URL}/profile`, payload, { headers });
       showMessage('success', 'Profile identity updated');
     } catch (err) {
       showMessage('error', 'Update synchronization failed');

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 import { Briefcase, Calendar, MapPin } from 'lucide-react';
 import axios from 'axios';
@@ -10,7 +11,7 @@ const Experience = () => {
   useEffect(() => {
     const fetchExp = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/experience');
+        const { data } = await axios.get(`\${BASE_URL}/experience`);
         setExperiences(data.data);
       } catch (err) {
         console.error('Error fetching experience', err);

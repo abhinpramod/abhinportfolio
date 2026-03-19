@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import axios from 'axios';
@@ -50,7 +51,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/profile');
+        const { data } = await axios.get(`\${BASE_URL}/profile`);
         setProfile(data.data);
       } catch (err) {
         console.error('Error fetching profile', err);

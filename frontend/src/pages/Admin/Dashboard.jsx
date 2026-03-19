@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import axios from 'axios';
 import { 
   Briefcase, 
@@ -27,12 +28,12 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         const results = await Promise.allSettled([
-          axios.get('http://localhost:5000/api/projects'),
-          axios.get('http://localhost:5000/api/skills'),
-          axios.get('http://localhost:5000/api/experience'),
-          axios.get('http://localhost:5000/api/education'),
-          axios.get('http://localhost:5000/api/certifications'),
-          axios.get('http://localhost:5000/api/contact', {
+          axios.get(`\${BASE_URL}/projects`),
+          axios.get(`\${BASE_URL}/skills`),
+          axios.get(`\${BASE_URL}/experience`),
+          axios.get(`\${BASE_URL}/education`),
+          axios.get(`\${BASE_URL}/certifications`),
+          axios.get(`\${BASE_URL}/contact`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
           })
         ]);

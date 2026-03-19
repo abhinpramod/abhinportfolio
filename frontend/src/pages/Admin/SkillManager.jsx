@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import axios from 'axios';
 import { Plus, Trash2, Edit2, Save, X, Code2, CheckCircle2, AlertCircle } from 'lucide-react';
 
@@ -18,7 +19,7 @@ const SkillManager = () => {
 
   const fetchSkills = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/skills');
+      const { data } = await axios.get(`\${BASE_URL}/skills`);
       setSkills(data.data);
     } catch (err) {
       console.error(err);
@@ -35,7 +36,7 @@ const SkillManager = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this skill?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/skills/${id}`, { headers });
+      await axios.delete(`\${BASE_URL}/skills/${id}`, { headers });
       setSkills(skills.filter(s => s._id !== id));
       showMessage('success', 'Skill deleted');
     } catch (err) {
@@ -47,10 +48,10 @@ const SkillManager = () => {
     e.preventDefault();
     try {
       if (currentSkill._id) {
-        await axios.put(`http://localhost:5000/api/skills/${currentSkill._id}`, currentSkill, { headers });
+        await axios.put(`\${BASE_URL}/skills/${currentSkill._id}`, currentSkill, { headers });
         showMessage('success', 'Skill updated');
       } else {
-        await axios.post('http://localhost:5000/api/skills', currentSkill, { headers });
+        await axios.post(`\${BASE_URL}/skills`, currentSkill, { headers });
         showMessage('success', 'Skill added');
       }
       setIsEditing(false);

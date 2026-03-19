@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import axios from 'axios';
 import { Plus, Trash2, Edit2, Save, X, Award, ExternalLink, CheckCircle2, AlertCircle } from 'lucide-react';
 
@@ -23,7 +24,7 @@ const CertificationManager = () => {
 
   const fetchCertifications = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/certifications');
+      const { data } = await axios.get(`\${BASE_URL}/certifications`);
       setCertifications(data.data);
     } catch (err) {
       console.error(err);
@@ -40,7 +41,7 @@ const CertificationManager = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this certification?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/certifications/${id}`, { headers });
+      await axios.delete(`\${BASE_URL}/certifications/${id}`, { headers });
       setCertifications(certifications.filter(c => c._id !== id));
       showMessage('success', 'Certification deleted');
     } catch (err) {
@@ -52,10 +53,10 @@ const CertificationManager = () => {
     e.preventDefault();
     try {
       if (currentCert._id) {
-        await axios.put(`http://localhost:5000/api/certifications/${currentCert._id}`, currentCert, { headers });
+        await axios.put(`\${BASE_URL}/certifications/${currentCert._id}`, currentCert, { headers });
         showMessage('success', 'Certification updated');
       } else {
-        await axios.post('http://localhost:5000/api/certifications', currentCert, { headers });
+        await axios.post(`\${BASE_URL}/certifications`, currentCert, { headers });
         showMessage('success', 'Certification added');
       }
       setIsEditing(false);

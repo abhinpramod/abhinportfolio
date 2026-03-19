@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 import { Award, ExternalLink, ShieldCheck } from 'lucide-react';
 import axios from 'axios';
@@ -10,7 +11,7 @@ const Certifications = () => {
   useEffect(() => {
     const fetchCerts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/certifications');
+        const { data } = await axios.get(`\${BASE_URL}/certifications`);
         setCertifications(data.data);
       } catch (err) {
         console.error('Error fetching certifications', err);
