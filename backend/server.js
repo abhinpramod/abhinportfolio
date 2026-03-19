@@ -29,5 +29,7 @@ app.use("/api/experience", experienceRoutes);
 app.use("/api/education", educationRoutes);
 app.use("/api/certifications", certificationRoutes);
 
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT} 🚀`));
