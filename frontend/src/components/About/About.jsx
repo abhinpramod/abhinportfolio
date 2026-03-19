@@ -14,9 +14,9 @@ const About = () => {
     const fetchData = async () => {
       try {
         const [profileRes, expRes, eduRes] = await Promise.all([
-          axios.get(`\${BASE_URL}/profile`),
-          axios.get(`\${BASE_URL}/experience`),
-          axios.get(`\${BASE_URL}/education`)
+          axios.get(`${BASE_URL}/profile`),
+          axios.get(`${BASE_URL}/experience`),
+          axios.get(`${BASE_URL}/education`)
         ]);
         setProfile(profileRes.data.data);
         setExperiences(expRes.data.data);
