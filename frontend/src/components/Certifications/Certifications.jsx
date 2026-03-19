@@ -11,7 +11,7 @@ const Certifications = () => {
   useEffect(() => {
     const fetchCerts = async () => {
       try {
-        const { data } = await axios.get(`\${BASE_URL}/certifications`);
+        const { data } = await axios.get(`${BASE_URL}/certifications`);
         setCertifications(data.data);
       } catch (err) {
         console.error('Error fetching certifications', err);

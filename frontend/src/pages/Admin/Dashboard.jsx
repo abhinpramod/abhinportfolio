@@ -28,12 +28,12 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         const results = await Promise.allSettled([
-          axios.get(`\${BASE_URL}/projects`),
-          axios.get(`\${BASE_URL}/skills`),
-          axios.get(`\${BASE_URL}/experience`),
-          axios.get(`\${BASE_URL}/education`),
-          axios.get(`\${BASE_URL}/certifications`),
-          axios.get(`\${BASE_URL}/contact`, {
+          axios.get(`${BASE_URL}/projects`),
+          axios.get(`${BASE_URL}/skills`),
+          axios.get(`${BASE_URL}/experience`),
+          axios.get(`${BASE_URL}/education`),
+          axios.get(`${BASE_URL}/certifications`),
+          axios.get(`${BASE_URL}/contact`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` }
           })
         ]);

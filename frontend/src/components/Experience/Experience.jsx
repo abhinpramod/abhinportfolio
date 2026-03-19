@@ -11,7 +11,7 @@ const Experience = () => {
   useEffect(() => {
     const fetchExp = async () => {
       try {
-        const { data } = await axios.get(`\${BASE_URL}/experience`);
+        const { data } = await axios.get(`${BASE_URL}/experience`);
         setExperiences(data.data);
       } catch (err) {
         console.error('Error fetching experience', err);

@@ -36,7 +36,7 @@ const ProfileManager = () => {
 
   const fetchProfile = async () => {
     try {
-      const { data } = await axios.get(`\${BASE_URL}/profile`);
+      const { data } = await axios.get(`${BASE_URL}/profile`);
       if (data.data) {
         const d = data.data;
         setProfile({
@@ -86,7 +86,7 @@ const ProfileManager = () => {
         phone: profile.contactInfo?.phone || '',
         address: profile.contactInfo?.address || ''
       };
-      await axios.post(`\${BASE_URL}/profile`, payload, { headers });
+      await axios.post(`${BASE_URL}/profile`, payload, { headers });
       showMessage('success', 'Profile identity updated');
     } catch (err) {
       showMessage('error', 'Update synchronization failed');

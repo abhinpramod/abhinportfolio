@@ -29,7 +29,7 @@ const Navbar = () => {
 
     const fetchProfile = async () => {
       try {
-        const { data } = await axios.get(`\${BASE_URL}/profile`);
+        const { data } = await axios.get(`${BASE_URL}/profile`);
         setProfile(data.data);
       } catch (err) {
         console.error('Error fetching profile in navbar', err);

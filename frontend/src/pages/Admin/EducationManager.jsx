@@ -23,7 +23,7 @@ const EducationManager = () => {
 
   const fetchEducation = async () => {
     try {
-      const { data } = await axios.get(`\${BASE_URL}/education`);
+      const { data } = await axios.get(`${BASE_URL}/education`);
       setEducation(data.data);
     } catch (err) {
       console.error(err);
@@ -40,7 +40,7 @@ const EducationManager = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this education entry?')) return;
     try {
-      await axios.delete(`\${BASE_URL}/education/${id}`, { headers });
+      await axios.delete(`${BASE_URL}/education/${id}`, { headers });
       setEducation(education.filter(e => e._id !== id));
       showMessage('success', 'Education deleted');
     } catch (err) {
@@ -52,10 +52,10 @@ const EducationManager = () => {
     e.preventDefault();
     try {
       if (currentEdu._id) {
-        await axios.put(`\${BASE_URL}/education/${currentEdu._id}`, currentEdu, { headers });
+        await axios.put(`${BASE_URL}/education/${currentEdu._id}`, currentEdu, { headers });
         showMessage('success', 'Education updated');
       } else {
-        await axios.post(`\${BASE_URL}/education`, currentEdu, { headers });
+        await axios.post(`${BASE_URL}/education`, currentEdu, { headers });
         showMessage('success', 'Education added');
       }
       setIsEditing(false);

@@ -10,7 +10,7 @@ const Skills = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const { data } = await axios.get(`\${BASE_URL}/skills`);
+        const { data } = await axios.get(`${BASE_URL}/skills`);
         setSkills(data.data);
       } catch (err) {
         console.error('Error fetching skills', err);

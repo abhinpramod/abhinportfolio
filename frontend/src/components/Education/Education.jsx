@@ -11,7 +11,7 @@ const Education = () => {
   useEffect(() => {
     const fetchEdu = async () => {
       try {
-        const { data } = await axios.get(`\${BASE_URL}/education`);
+        const { data } = await axios.get(`${BASE_URL}/education`);
         setEducation(data.data);
       } catch (err) {
         console.error('Error fetching education', err);

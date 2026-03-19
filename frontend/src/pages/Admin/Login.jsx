@@ -26,7 +26,7 @@ const Login = () => {
     setLoading(true);
     setError('');
     try {
-      const { data } = await axios.post(`\${BASE_URL}/auth/login`, { email, password });
+      const { data } = await axios.post(`${BASE_URL}/auth/login`, { email, password });
       localStorage.setItem('adminToken', data.token);
       setEmail('');
       setPassword('');

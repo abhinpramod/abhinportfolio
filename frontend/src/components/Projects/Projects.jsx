@@ -18,7 +18,7 @@ const Projects = () => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`\${BASE_URL}/projects`);
+      const { data } = await axios.get(`${BASE_URL}/projects`);
       setProjects(data.data);
       setError('');
     } catch (err) {
@@ -32,7 +32,7 @@ const Projects = () => {
   const seedProjects = async () => {
     try {
       setLoading(true);
-      await axios.post(`\${BASE_URL}/projects/seed`);
+      await axios.post(`${BASE_URL}/projects/seed`);
       fetchProjects();
     } catch (err) {
       setError('Failed to seed projects.');

@@ -29,7 +29,7 @@ const Contact = () => {
     setStatus({ submitting: true, success: false, error: '' });
     
     try {
-      await axios.post(`\${BASE_URL}/contact`, formData);
+      await axios.post(`${BASE_URL}/contact`, formData);
       setStatus({ submitting: false, success: true, error: '' });
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       
