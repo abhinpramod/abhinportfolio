@@ -1,0 +1,126 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Github, Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
+import axios from 'axios';
+import './Navbar.css';
+
+const navLinks = [
+  { name: 'Home', href: '#home' },
+  { name: 'About', href: '#about' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Education', href: '#education' },
+  { name: 'Certifications', href: '#certifications' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Contact', href: '#contact' }
+];
+
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    const fetchProfile = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:5000/api/profile');
+        setProfile(data.data);
+      } catch (err) {
+        console.error('Error fetching profile in navbar', err);
+      }
+    };
+    fetchProfile();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const socials = profile?.socialLinks || {};
+
+  return (
+    <header className={`navbar ${isScrolled ? 'scrolled glass' : ''}`}>
+      <div className="container nav-container">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="logo"
+        >
+          <a href="#home" className="text-gradient">Dev.Folio</a>
+        </motion.div>
+
+        {/* Desktop Nav */}
+        <nav className="desktop-nav">
+          <ul className="nav-links">
+            {navLinks.map((link, i) => (
+              <motion.li 
+                key={link.name}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.05 }}
+              >
+                <a href={link.href} className="nav-link">{link.name}</a>
+              </motion.li>
+            ))}
+          </ul>
+          
+          <motion.div 
+            className="social-links"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            {socials.github && <a href={socials.github} target="_blank" rel="noreferrer"><Github size={18} /></a>}
+            {socials.linkedin && <a href={socials.linkedin} target="_blank" rel="noreferrer"><Linkedin size={18} /></a>}
+            {socials.twitter && <a href={socials.twitter} target="_blank" rel="noreferrer"><Twitter size={18} /></a>}
+            <a href="#contact" className="btn btn-primary nav-btn">Hire Me</a>
+          </motion.div>
+        </nav>
+
+        {/* Mobile Toggle */}
+        <div className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            className="mobile-menu glass"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+          >
+            <ul className="mobile-nav-links">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <a 
+                    href={link.href} 
+                    className="mobile-nav-link"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <div className="mobile-socials">
+                  {socials.github && <a href={socials.github} target="_blank" rel="noreferrer"><Github size={22} /></a>}
+                  {socials.linkedin && <a href={socials.linkedin} target="_blank" rel="noreferrer"><Linkedin size={22} /></a>}
+                  {socials.twitter && <a href={socials.twitter} target="_blank" rel="noreferrer"><Twitter size={22} /></a>}
+                </div>
+              </li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+};
+
+export default Navbar;

@@ -1,0 +1,162 @@
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+import axios from 'axios';
+import './Hero.css';
+
+const Typewriter = ({ texts, typingSpeed = 100, deletingSpeed = 50, pauseTime = 1500 }) => {
+  const [textIndex, setTextIndex] = useState(0);
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (!texts || texts.length === 0) return;
+    let timer;
+    const currentFullText = texts[textIndex];
+
+    if (isDeleting) {
+      if (text === '') {
+        setIsDeleting(false);
+        setTextIndex((prev) => (prev + 1) % texts.length);
+      } else {
+        timer = setTimeout(() => {
+          setText(text.slice(0, -1));
+        }, deletingSpeed);
+      }
+    } else {
+      if (text === currentFullText) {
+        timer = setTimeout(() => setIsDeleting(true), pauseTime);
+      } else {
+        timer = setTimeout(() => {
+          setText(currentFullText.slice(0, text.length + 1));
+        }, typingSpeed);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, textIndex, texts, typingSpeed, deletingSpeed, pauseTime]);
+
+  return (
+    <span className="typewriter">
+      {text}
+      <span className="cursor">|</span>
+    </span>
+  );
+};
+
+const Hero = () => {
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await axios.get('http://localhost:5000/api/profile');
+        setProfile(data.data);
+      } catch (err) {
+        console.error('Error fetching profile', err);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const name = profile?.name || "abhin pramod";
+  const titleTexts = profile?.titleChunks?.length > 0 ? profile.titleChunks : ["MERN Stack Apps", "Scalable Backends", "Modern UIs", "REST APIs"];
+  const subtitle = profile?.subtitle || "Aspiring MERN Stack Developer with hands-on experience in building full-stack web applications. Passionate about scalable and user-friendly solutions.";
+
+  return (
+    <section id="home" className="hero">
+      {/* Background elements */}
+      <div className="custom-shape-divider-bottom-1682356588">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" className="shape-fill"></path>
+          </svg>
+      </div>
+      <div className="hero-glow bg-primary"></div>
+      <div className="hero-glow bg-secondary"></div>
+      
+      <div className="container hero-container">
+        <motion.div 
+          className="hero-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div 
+            className="badge glass"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <span className="badge-dot animate-pulse-btn"></span> Available for Work
+          </motion.div>
+          
+          <h1 className="heading-xl hero-title">
+            Hi, I'm <span className="text-gradient">{name}</span><br/>
+            I build <Typewriter texts={titleTexts} />
+          </h1>
+          
+          <motion.p 
+            className="hero-subtitle"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            {subtitle}
+          </motion.p>
+          
+          <motion.div 
+            className="hero-cta"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <a href="#projects" className="btn btn-primary btn-lg">
+              View Work <ArrowRight size={18} />
+            </a>
+            <a href={profile?.github || "https://github.com/abhinpramod"} className="btn btn-outline btn-lg" target="_blank" rel="noreferrer">
+              GitHub Profile
+            </a>
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="hero-visual animate-float"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+        >
+          <div className="cube-wrapper">
+             <div className="tech-ring ring-1"></div>
+             <div className="tech-ring ring-2"></div>
+             <div className="tech-ring ring-3"></div>
+             <div className="code-card glass-card">
+               <div className="card-header">
+                 <div className="mac-dots">
+                   <span></span><span></span><span></span>
+                 </div>
+                 <div className="file-name">server.js</div>
+               </div>
+               <div className="card-body">
+                 <pre><code>
+<span className="keyword">import</span> express <span className="keyword">from</span> <span className="string">'express'</span>;
+<span className="keyword">import</span> connectDB <span className="keyword">from</span> <span className="string">'./config/db'</span>;
+
+<span className="keyword">const</span> app = <span className="function">express</span>();
+<span className="function">connectDB</span>();
+
+{"app."}<span className="function">use</span>(<span className="string">'/api/users'</span>, userRoutes);
+
+{"app."}<span className="function">listen</span>(<span className="number">5000</span>, () =&gt; {"{"}
+  {"console."}<span className="function">log</span>(<span className="string">'Server running on port 5000 🚀'</span>);
+{"}"});
+                 </code></pre>
+               </div>
+             </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;
