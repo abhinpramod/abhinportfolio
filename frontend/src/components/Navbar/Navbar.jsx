@@ -48,7 +48,7 @@ const Navbar = () => {
     const newCount = logoClicks + 1;
     setLogoClicks(newCount);
     
-    if (newCount === 5) {
+    if (newCount === 3) {
       window.location.href = '/admin/login';
       setLogoClicks(0);
     }
