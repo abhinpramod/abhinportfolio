@@ -60,7 +60,7 @@ const Hero = () => {
     fetchProfile();
   }, []);
 
-  const name = profile?.name || "abhin pramod";
+  const name = profile?.name || "Abhin Pramod";
   const titleTexts = profile?.titleChunks?.length > 0 ? profile.titleChunks : ["MERN Stack Apps", "Scalable Backends", "Modern UIs", "REST APIs"];
   const subtitle = profile?.subtitle || "Aspiring MERN Stack Developer with hands-on experience in building full-stack web applications. Passionate about scalable and user-friendly solutions.";
 
