@@ -40,6 +40,9 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100vw;
+  max-width: 100%;
 }
 
 body {
@@ -48,6 +51,8 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100vw;
+  max-width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -305,4 +310,18 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   left: 0;
   color: var(--accent-primary);
+}
+
+/* Global Mobile Responsiveness */
+@media (max-width: 768px) {
+  .section-padding { padding: 4rem 0; }
+  .heading-xl { font-size: clamp(2.5rem, 6vw, 4rem); }
+  .heading-lg { font-size: clamp(2rem, 5vw, 3rem); }
+  .btn { padding: 0.7rem 1.4rem; font-size: 0.95rem; }
+}
+
+@media (max-width: 480px) {
+  .section-padding { padding: 3rem 0; }
+  .container { padding: 0 1.25rem; }
+  .glass-card { border-radius: var(--radius-md); }
 }

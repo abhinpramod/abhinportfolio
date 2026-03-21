@@ -9,7 +9,8 @@ import {
   UserCircle, 
   MessageSquare,
   ChevronRight,
-  LayoutDashboard
+  LayoutDashboard,
+  X
 } from 'lucide-react';
 
 const navItems = [
@@ -23,16 +24,28 @@ const navItems = [
   { path: 'messages', label: 'Messages', icon: MessageSquare },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, setIsOpen }) => {
   return (
-    <aside className="w-72 bg-[#0f0f0f] border-r border-gray-800/50 flex flex-col h-full z-20">
-      <div className="p-8 pb-4">
-        <h1 className="text-2xl font-bold font-serif tracking-tight">
-          <span className="text-blue-500">Dev</span>
-          <span className="text-gray-300">.</span>
-          <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Folio</span>
-        </h1>
-        <p className="text-xs text-gray-500 mt-2 font-medium tracking-widest uppercase">Management Suite</p>
+    <aside className={`
+      fixed md:static inset-y-0 left-0 z-30 w-72 bg-[#0f0f0f] border-r border-gray-800/50 flex flex-col h-full
+      transition-transform duration-300 ease-in-out transform shadow-2xl md:shadow-none
+      ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+    `}>
+      <div className="p-8 pb-4 flex justify-between items-start">
+        <div>
+          <h1 className="text-2xl font-bold font-serif tracking-tight">
+            <span className="text-blue-500">Dev</span>
+            <span className="text-gray-300">.</span>
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Folio</span>
+          </h1>
+          <p className="text-xs text-gray-500 mt-2 font-medium tracking-widest uppercase">Management Suite</p>
+        </div>
+        <button 
+          className="md:hidden p-1 text-gray-400 hover:text-white transition-colors"
+          onClick={() => setIsOpen && setIsOpen(false)}
+        >
+          <X size={20} />
+        </button>
       </div>
 
       <nav className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto custom-scrollbar">
@@ -40,6 +53,7 @@ const Sidebar = () => {
           <NavLink
             key={item.path}
             to={item.path}
+            onClick={() => setIsOpen && setIsOpen(false)}
             className={({ isActive }) => `
               flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 group
               ${isActive 

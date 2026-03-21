@@ -1,5 +1,6 @@
 import express from "express";
 import Project from "../models/Project.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -47,6 +48,36 @@ router.post("/seed", async (req, res) => {
     res.json({ success: true, message: `${created.length} projects seeded.`, data: created });
   } catch (error) {
     res.status(500).json({ success: false, message: "Seeding failed." });
+  }
+});
+
+// POST /api/projects
+router.post("/", protect, async (req, res) => {
+  try {
+    const project = await Project.create(req.body);
+    res.status(201).json({ success: true, data: project });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+});
+
+// PUT /api/projects/:id
+router.put("/:id", protect, async (req, res) => {
+  try {
+    const project = await Project.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
+    res.json({ success: true, data: project });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error." });
+  }
+});
+
+// DELETE /api/projects/:id
+router.delete("/:id", protect, async (req, res) => {
+  try {
+    await Project.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: "Project deleted" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error." });
   }
 });
 

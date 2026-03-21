@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Menu } from 'lucide-react';
 
 const AdminLayout = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const adminEmail = "admin@example.com"; // Can fetch from profile if needed
 
@@ -13,18 +14,34 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#0a0a0a] text-gray-100 overflow-hidden font-sans">
-      <Sidebar />
+    <div className="flex h-screen bg-[#0a0a0a] text-gray-100 overflow-hidden font-sans relative">
+      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-20 md:hidden backdrop-blur-sm"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
       
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Header */}
-        <header className="h-16 border-b border-gray-800/50 bg-[#0f0f0f]/80 backdrop-blur-md flex items-center justify-between px-8 z-10 sticky top-0">
-          <h2 className="text-xl font-semibold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Admin Portal
-          </h2>
+        <header className="h-16 border-b border-gray-800/50 bg-[#0f0f0f]/80 backdrop-blur-md flex items-center justify-between px-4 md:px-8 z-10 sticky top-0">
+          <div className="flex items-center gap-3">
+            <button 
+              className="md:hidden p-2 -ml-2 text-gray-400 hover:text-white rounded-lg transition-colors"
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <Menu size={24} />
+            </button>
+            <h2 className="text-xl font-semibold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hidden sm:block">
+              Admin Portal
+            </h2>
+          </div>
           
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-800/50 border border-gray-700/50">
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-800/50 border border-gray-700/50">
               <User size={16} className="text-blue-400" />
               <span className="text-sm text-gray-300 font-medium">{adminEmail}</span>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Github, Linkedin, Twitter, Heart } from 'lucide-react';
 import './Footer.css';
 

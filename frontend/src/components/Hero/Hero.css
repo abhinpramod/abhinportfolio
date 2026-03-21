@@ -175,6 +175,7 @@
 
 .code-card {
   width: 400px;
+  max-width: 100vw;
   border-radius: 12px;
   background: rgba(15, 17, 26, 0.8) !important;
   backdrop-filter: blur(20px);
@@ -227,6 +228,8 @@
 
 .card-body pre {
   margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .card-body code {
@@ -234,6 +237,9 @@
   font-size: 0.9rem;
   line-height: 1.5;
   color: #e2e8f0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .keyword { color: #f472b6; }
@@ -260,4 +266,24 @@
     width: 90%;
     transform: none;
   }
+}
+
+@media (max-width: 768px) {
+  .ring-1 { width: 220px; height: 220px; }
+  .ring-2 { width: 320px; height: 320px; }
+  .ring-3 { width: 450px; height: 450px; }
+  .hero-visual { height: 400px; }
+  .hero { padding-top: 80px; }
+}
+
+@media (max-width: 480px) {
+  .ring-1 { width: 160px; height: 160px; }
+  .ring-2 { width: 240px; height: 240px; }
+  .ring-3 { width: 330px; height: 330px; }
+  .hero-visual { height: 300px; }
+  .code-card { width: 95%; }
+  .card-body code { font-size: 0.8rem; }
+  .hero-container { gap: 1rem; }
+  .hero-glow { width: 300px; height: 300px; filter: blur(80px); }
+  .btn-lg { padding: 0.8rem 1.5rem; font-size: 1rem; }
 }

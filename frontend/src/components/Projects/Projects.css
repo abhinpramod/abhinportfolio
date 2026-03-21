@@ -103,6 +103,7 @@
 .project-links {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .project-links a {
@@ -153,5 +154,15 @@
     grid-template-columns: 1fr;
     max-width: 500px;
     margin: 0 auto;
+  }
+  .project-card {
+    padding: 1.5rem;
+  }
+  .filters {
+    gap: 0.5rem;
+  }
+  .filter-btn {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
   }
 }

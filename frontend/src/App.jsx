@@ -20,6 +20,7 @@ import ProfileManager from './pages/Admin/ProfileManager';
 import MessageManager from './pages/Admin/MessageManager';
 import EducationManager from './pages/Admin/EducationManager';
 import CertificationManager from './pages/Admin/CertificationManager';
+import Resume from './pages/Resume/Resume';
 import './App.css';
 
 // Protected Route Component
@@ -81,6 +82,9 @@ function App() {
               <Footer />
             </>
           } />
+
+          {/* Resume Route */}
+          <Route path="/resume" element={<Resume />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<Login />} />

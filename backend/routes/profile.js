@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", protect, async (req, res) => {
   try {
-    const profile = await Profile.findOneAndUpdate({}, req.body, { upsert: true, new: true });
+    const profile = await Profile.findOneAndUpdate({}, req.body, { upsert: true, returnDocument: 'after' });
     res.json({ success: true, data: profile });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server error" });

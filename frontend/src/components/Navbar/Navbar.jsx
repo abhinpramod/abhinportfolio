@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BASE_URL } from '../../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Github, Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Twitter } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './Navbar.css';
 
@@ -19,7 +20,8 @@ const navLinks = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [profile, setProfile] = useState(null);
+  const [socials, setSocials] = useState({ github: '', linkedin: '', twitter: '' });
+  const [logoClicks, setLogoClicks] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +32,7 @@ const Navbar = () => {
     const fetchProfile = async () => {
       try {
         const { data } = await axios.get(`${BASE_URL}/profile`);
-        setProfile(data.data);
+        setSocials(data.data.socialLinks || { github: '', linkedin: '', twitter: '' });
       } catch (err) {
         console.error('Error fetching profile in navbar', err);
       }
@@ -40,16 +42,32 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const socials = profile?.socialLinks || {};
+  // Hidden admin trigger: tap logo 5 times quickly
+  const handleLogoCounter = (e) => {
+    // If it's a touch or click, prevent default ONLY if we are tapping fast, so normal clicks still go to #home
+    const newCount = logoClicks + 1;
+    setLogoClicks(newCount);
+    
+    if (newCount === 5) {
+      window.location.href = '/admin/login';
+      setLogoClicks(0);
+    }
+    
+    setTimeout(() => {
+      setLogoClicks(0);
+    }, 2000);
+  };
 
   return (
     <header className={`navbar ${isScrolled ? 'scrolled glass' : ''}`}>
       <div className="container nav-container">
+        {/* Logo with hidden admin trigger */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           className="logo"
+          onClick={handleLogoCounter}
         >
           <a href="#home" className="text-gradient">Dev.Folio</a>
         </motion.div>

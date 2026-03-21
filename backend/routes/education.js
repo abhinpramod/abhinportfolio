@@ -24,7 +24,7 @@ router.post("/", protect, async (req, res) => {
 
 router.put("/:id", protect, async (req, res) => {
   try {
-    const edu = await Education.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const edu = await Education.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
     res.json({ success: true, data: edu });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server error" });

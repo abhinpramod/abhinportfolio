@@ -99,9 +99,12 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
+  width: 100vw;
+  max-width: 100%;
+  background-color: var(--bg-primary); /* Ensure solid background on mobile so links don't overlap with page content */
   overflow: hidden;
   border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
 }
 
 .mobile-nav-links {

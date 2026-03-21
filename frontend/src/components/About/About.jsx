@@ -3,6 +3,7 @@ import { BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 import { Code, Server, Database, Layout } from 'lucide-react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './About.css';
 
 const About = () => {
@@ -93,7 +94,7 @@ const About = () => {
             
             <div className="about-cta mt-8">
               <a href="#contact" className="btn btn-primary">Let's Connect</a>
-              <a href={profile?.resumeLink || "#"} target="_blank" rel="noreferrer" className="btn btn-outline ml-4">Download CV</a>
+              <Link to="/resume" className="btn btn-outline ml-4">View CV</Link>
             </div>
           </motion.div>
 

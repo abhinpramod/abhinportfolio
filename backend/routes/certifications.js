@@ -24,7 +24,7 @@ router.post("/", protect, async (req, res) => {
 
 router.put("/:id", protect, async (req, res) => {
   try {
-    const cert = await Certification.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const cert = await Certification.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
     res.json({ success: true, data: cert });
   } catch (error) {
     res.status(500).json({ success: false, message: "Server error" });
