@@ -1,23 +1,24 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
 
 const router = express.Router();
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+
+    if (!adminEmail || !adminPassword) {
+      return res.status(500).json({ success: false, message: "Admin credentials not configured on server" });
+    }
+
+    if (email !== adminEmail || password !== adminPassword) {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({ success: false, message: "Invalid credentials" });
-    }
-
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "secret", {
+    // Use a fixed ID "admin" for token since there is no DB user
+    const token = jwt.sign({ id: "admin" }, process.env.JWT_SECRET || "secret", {
       expiresIn: "30d",
     });
 

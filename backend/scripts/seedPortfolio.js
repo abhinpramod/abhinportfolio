@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
 import Profile from '../models/Profile.js';
 import Skill from '../models/Skill.js';
 import Experience from '../models/Experience.js';
@@ -16,25 +15,14 @@ const seed = async () => {
     console.log("Connected to MongoDB...");
 
     // 1. Clear existing data
-    await User.deleteMany({});
     await Profile.deleteMany({});
     await Skill.deleteMany({});
     await Experience.deleteMany({});
     await Education.deleteMany({});
     await Project.deleteMany({});
 
-    // 2. Seed Admin User
-    const adminEmail = process.env.ADMIN_EMAIL || "admin@example.com";
-    const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
-    console.log(`Seeding admin user: ${adminEmail}`);
-    try {
-      await User.create({ email: adminEmail, password: adminPassword });
-    } catch (err) {
-      console.error("❌ User creation failed specifically:", err.message);
-      console.error(err);
-      throw err;
-    }
-    console.log("Admin user seeded.");
+    // 2. Admin User (Now handled via .env only, no DB seeding needed)
+    console.log("Admin user relies on .env credentials. Skipping DB seeding for User.");
 
     // 3. Seed Profile
     await Profile.create({
