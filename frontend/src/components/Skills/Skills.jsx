@@ -54,7 +54,7 @@ const Skills = () => {
             className="heading-lg"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+                    viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5 }}
           >
             My <span className="text-gradient">Skills</span>
@@ -63,7 +63,7 @@ const Skills = () => {
             className="section-divider"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
+                    viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           ></motion.div>
         </div>
@@ -75,7 +75,7 @@ const Skills = () => {
               className="skill-category glass-card"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+                      viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
             >
               <h3 className="text-gradient">{cat.title}</h3>
@@ -87,7 +87,7 @@ const Skills = () => {
                     whileHover={{ scale: 1.05 }}
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
+                            viewport={{ once: false, amount: 0.2 }}
                     transition={{ delay: (idx * 0.1) + (sIdx * 0.05) }}
                   >
                     {skill}

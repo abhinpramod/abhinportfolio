@@ -30,7 +30,7 @@ const Education = () => {
             className="heading-lg"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5 }}
           >
             Academic <span className="text-gradient">Background</span>
@@ -39,7 +39,7 @@ const Education = () => {
             className="section-divider"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           ></motion.div>
         </div>
@@ -51,7 +51,7 @@ const Education = () => {
               className="education-card glass-card"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
             >
               <div className="card-icon text-gradient">

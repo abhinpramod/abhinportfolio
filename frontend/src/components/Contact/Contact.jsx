@@ -52,7 +52,7 @@ const Contact = () => {
             className="heading-lg"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5 }}
           >
             Get In <span className="text-gradient">Touch</span>
@@ -61,7 +61,7 @@ const Contact = () => {
             className="section-divider"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           ></motion.div>
         </div>
@@ -71,7 +71,7 @@ const Contact = () => {
             className="contact-info"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
             <h3>Let's talk about your project</h3>
@@ -116,7 +116,7 @@ const Contact = () => {
             className="contact-form-container glass-card"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
             <form onSubmit={handleSubmit} className="contact-form">

@@ -30,7 +30,7 @@ const Experience = () => {
             className="heading-lg"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5 }}
           >
             Work <span className="text-gradient">Experience</span>
@@ -39,7 +39,7 @@ const Experience = () => {
             className="section-divider"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           ></motion.div>
         </div>
@@ -51,7 +51,7 @@ const Experience = () => {
               className="timeline-item"
               initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
             >
               <div className="timeline-dot text-gradient">

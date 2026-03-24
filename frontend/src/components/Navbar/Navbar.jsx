@@ -134,6 +134,11 @@ const Navbar = () => {
                   {socials.twitter && <a href={socials.twitter} target="_blank" rel="noreferrer"><Twitter size={22} /></a>}
                 </div>
               </li>
+              <li style={{ marginTop: '1rem' }}>
+                <a href="#contact" className="btn btn-primary" onClick={() => setIsMobileMenuOpen(false)}>
+                  Hire Me
+                </a>
+              </li>
             </ul>
           </motion.div>
         )}

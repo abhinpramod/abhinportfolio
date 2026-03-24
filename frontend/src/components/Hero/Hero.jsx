@@ -3,6 +3,7 @@ import { BASE_URL } from '../../config/api';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import axios from 'axios';
+import Hero3DVisual from './Hero3DVisual';
 import './Hero.css';
 
 const Typewriter = ({ texts, typingSpeed = 100, deletingSpeed = 50, pauseTime = 1500 }) => {
@@ -126,34 +127,9 @@ const Hero = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
         >
-          <div className="cube-wrapper">
-             <div className="tech-ring ring-1"></div>
-             <div className="tech-ring ring-2"></div>
-             <div className="tech-ring ring-3"></div>
-             <div className="code-card glass-card">
-               <div className="card-header">
-                 <div className="mac-dots">
-                   <span></span><span></span><span></span>
-                 </div>
-                 <div className="file-name">server.js</div>
-               </div>
-               <div className="card-body">
-                 <pre><code>
-<span className="keyword">import</span> express <span className="keyword">from</span> <span className="string">'express'</span>;
-<span className="keyword">import</span> connectDB <span className="keyword">from</span> <span className="string">'./config/db'</span>;
-
-<span className="keyword">const</span> app = <span className="function">express</span>();
-<span className="function">connectDB</span>();
-
-{"app."}<span className="function">use</span>(<span className="string">'/api/users'</span>, userRoutes);
-
-{"app."}<span className="function">listen</span>(<span className="number">5000</span>, () =&gt; {"{"}
-  {"console."}<span className="function">log</span>(<span className="string">'Server running on port 5000 🚀'</span>);
-{"}"});
-                 </code></pre>
-               </div>
-             </div>
-          </div>
+          <React.Suspense fallback={<div style={{color: 'white'}}>Loading 3D Visual...</div>}>
+            <Hero3DVisual />
+          </React.Suspense>
         </motion.div>
       </div>
     </section>

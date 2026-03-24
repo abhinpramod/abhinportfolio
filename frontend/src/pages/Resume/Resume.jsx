@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ArrowLeft, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import cvFile from '../../assets/ABHIN_CV (4) (1).pdf';
+import cvFile from '../../assets/Abhin-Mernstack developer.pdf';
 import './Resume.css';
 
 const Resume = () => {
@@ -18,7 +18,7 @@ const Resume = () => {
             <ArrowLeft size={18} /> Back
           </Link>
           <h2 className="text-gradient m-0 hidden sm:block">My Resume</h2>
-          <a href={cvFile} download="ABHIN_CV.pdf" target="_blank" rel="noreferrer" className="btn btn-primary download-btn">
+          <a href={cvFile} download="Abhin_Resume.pdf" target="_blank" rel="noreferrer" className="btn btn-primary download-btn">
             <Download size={18} /> <span className="hidden sm:inline">Download</span>
           </a>
         </div>
