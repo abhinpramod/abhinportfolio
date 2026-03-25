@@ -120,11 +120,13 @@ const Projects = () => {
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4 }}
                 >
-                  <div className="project-content">
-                    <div className="project-header">
-                      <div className="folder-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                      </div>
+                  <div className="project-image-container">
+                    <img 
+                      src={project.image || "/placeholder-project.png"} 
+                      alt={project.title} 
+                      className="project-image"
+                    />
+                    <div className="project-image-overlay">
                       <div className="project-links">
                         {project.github && (
                           <a href={project.github} target="_blank" rel="noreferrer"><Github size={20} /></a>
@@ -134,7 +136,9 @@ const Projects = () => {
                         )}
                       </div>
                     </div>
-                    
+                  </div>
+
+                  <div className="project-content">
                     <h3 className="project-title">
                       <a href={project.live || project.github} target="_blank" rel="noreferrer">{project.title}</a>
                     </h3>

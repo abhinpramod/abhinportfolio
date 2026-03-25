@@ -1,6 +1,7 @@
 import express from "express";
 import Project from "../models/Project.js";
 import { protect } from "../middleware/authMiddleware.js";
+import upload from "../middleware/uploadMiddleware.js";
 
 const router = express.Router();
 
@@ -52,21 +53,48 @@ router.post("/seed", async (req, res) => {
 });
 
 // POST /api/projects
-router.post("/", protect, async (req, res) => {
+router.post("/", protect, upload.single("image"), async (req, res) => {
   try {
-    const project = await Project.create(req.body);
+    const projectData = { ...req.body };
+    
+    // If a file was uploaded, use its Cloudinary URL
+    if (req.file) {
+      projectData.image = req.file.path;
+    }
+
+    // Handle tech if it's sent as a string (common with FormData)
+    if (typeof projectData.tech === 'string') {
+      projectData.tech = projectData.tech.split(',').map(t => t.trim()).filter(t => t !== '');
+    }
+
+    const project = await Project.create(projectData);
     res.status(201).json({ success: true, data: project });
   } catch (error) {
+    console.error("Project Create Error:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
 });
 
 // PUT /api/projects/:id
-router.put("/:id", protect, async (req, res) => {
+router.put("/:id", protect, upload.single("image"), async (req, res) => {
   try {
-    const project = await Project.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
+    const projectData = { ...req.body };
+
+    if (req.file) {
+      projectData.image = req.file.path;
+    }
+
+    if (typeof projectData.tech === 'string') {
+      projectData.tech = projectData.tech.split(',').map(t => t.trim()).filter(t => t !== '');
+    }
+
+    const project = await Project.findByIdAndUpdate(req.params.id, projectData, { 
+      new: true, // returnDocument: 'after' is equivalent to new: true in Mongoose
+      runValidators: true 
+    });
     res.json({ success: true, data: project });
   } catch (error) {
+    console.error("Project Update Error:", error);
     res.status(500).json({ success: false, message: "Server error." });
   }
 });

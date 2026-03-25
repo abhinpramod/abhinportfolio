@@ -23,8 +23,11 @@ const ProjectManager = () => {
     tech: '',
     github: '',
     live: '',
-    featured: false
+    featured: false,
+    image: ''
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -51,6 +54,7 @@ const ProjectManager = () => {
       ...project,
       tech: project.tech.join(', ')
     });
+    setImagePreview(project.image || placeholderImage);
     setIsEditing(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -66,27 +70,59 @@ const ProjectManager = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const placeholderImage = "/placeholder-project.png";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const projectData = {
-      ...currentProject,
-      tech: currentProject.tech.split(',').map(t => t.trim()).filter(t => t !== '')
-    };
+    
+    const formData = new FormData();
+    formData.append('title', currentProject.title);
+    formData.append('description', currentProject.description);
+    formData.append('tech', currentProject.tech);
+    formData.append('github', currentProject.github);
+    formData.append('live', currentProject.live);
+    formData.append('featured', currentProject.featured);
+    
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
 
     try {
+      const config = {
+        headers: {
+          ...headers,
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+
       if (currentProject._id) {
-        await axios.put(`${BASE_URL}/projects/${currentProject._id}`, projectData, { headers });
+        await axios.put(`${BASE_URL}/projects/${currentProject._id}`, formData, config);
         showMessage('success', 'Project updated successfully');
       } else {
-        await axios.post(`${BASE_URL}/projects`, projectData, { headers });
+        await axios.post(`${BASE_URL}/projects`, formData, config);
         showMessage('success', 'Project created successfully');
       }
-      setIsEditing(false);
-      setCurrentProject({ title: '', description: '', tech: '', github: '', live: '', featured: false });
+      resetForm();
       fetchProjects();
     } catch (err) {
+      console.error(err);
       showMessage('error', 'Operation failed');
     }
+  };
+
+  const resetForm = () => {
+    setIsEditing(false);
+    setCurrentProject({ title: '', description: '', tech: '', github: '', live: '', featured: false, image: '' });
+    setImageFile(null);
+    setImagePreview(null);
   };
 
   const showMessage = (type, text) => {
@@ -128,7 +164,7 @@ const ProjectManager = () => {
             <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent underline decoration-blue-500/30 underline-offset-8">
               {currentProject._id ? 'Edit Mission' : 'Ignite New Project'}
             </h3>
-            <button type="button" onClick={() => { setIsEditing(false); setCurrentProject({ title: '', description: '', tech: '', github: '', live: '', featured: false }); }} className="text-gray-500 hover:text-white transition-colors">
+            <button type="button" onClick={resetForm} className="text-gray-500 hover:text-white transition-colors">
               <X size={24} />
             </button>
           </div>
@@ -167,6 +203,31 @@ const ProjectManager = () => {
               placeholder="Describe the mission goals and architectural challenges..."
               required
             ></textarea>
+          </div>
+
+          <div className="space-y-4">
+            <label className="text-xs font-bold text-gray-500 uppercase tracking-widest px-1">Project Image</label>
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              <div className="flex-1 w-full">
+                <div className="relative group/upload h-40 border-2 border-dashed border-gray-800 rounded-2xl hover:border-blue-500/50 transition-all flex flex-col items-center justify-center p-4">
+                  <input 
+                    type="file" 
+                    onChange={handleImageChange}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    accept="image/*"
+                  />
+                  <ImageIcon size={32} className="text-gray-600 mb-2 group-hover/upload:text-blue-500 transition-colors" />
+                  <p className="text-xs font-bold text-gray-500 group-hover/upload:text-gray-300">Click to upload project cover</p>
+                  <p className="text-[10px] text-gray-700 mt-1">PNG, JPG or WEBP up to 5MB</p>
+                </div>
+              </div>
+              <div className="w-1/2 h-40 relative rounded-2xl overflow-hidden border border-gray-800 bg-gray-900 flex items-center justify-center group/preview">
+                <img src={imagePreview || placeholderImage} alt="Preview" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/preview:opacity-100 transition-opacity flex items-center justify-center">
+                  <p className="text-[10px] font-black text-white uppercase tracking-widest">Image Preview</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -213,7 +274,7 @@ const ProjectManager = () => {
             <button type="submit" className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-blue-500/10 hover:shadow-blue-500/20 transition-all active:scale-[0.98]">
               <Save size={18} /> {currentProject._id ? 'Update Mission' : 'Commit Project'}
             </button>
-            <button type="button" onClick={() => setIsEditing(false)} className="flex items-center gap-2 bg-gray-800/50 hover:bg-gray-800 text-gray-300 px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-[0.2em] transition-all border border-gray-700/50">
+            <button type="button" onClick={resetForm} className="flex items-center gap-2 bg-gray-800/50 hover:bg-gray-800 text-gray-300 px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-[0.2em] transition-all border border-gray-700/50">
               Abandon Changes
             </button>
           </div>
@@ -226,8 +287,8 @@ const ProjectManager = () => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[80px] -mr-12 -mt-12 rounded-full"></div>
             
             <div className="flex justify-between items-start mb-6 relative z-10">
-              <div className="w-14 h-14 bg-gray-900/80 rounded-2xl border border-gray-800/50 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform duration-500">
-                <ImageIcon size={28} />
+              <div className="w-14 h-14 bg-gray-900/80 rounded-2xl border border-gray-800/50 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                <img src={project.image || placeholderImage} alt={project.title} className="w-full h-full object-cover" />
               </div>
               <div className="flex gap-2">
                 <button 
